@@ -1,0 +1,18 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  liquibase:
+    enabled: true
+
+  datasource:
+    url: jdbc:h2:file:./db
+    username: root # имя пользователя консоли
+    password: password # пароль консоли
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+  h2:
+    console:
+      enabled: true

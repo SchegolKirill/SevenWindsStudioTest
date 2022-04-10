@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: users
+      author: Kirill Schegol
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: int unsigned
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: surname
+                  type: varchar(50)
+              - column:
+                  name: name
+                  type: varchar(50)
+              - column:
+                  name: patronymic
+                  type: varchar(50)
+              - column:
+                  name: email
+                  type: varchar(50)
+              - column:
+                  name: phone
+                  type: varchar(50)
