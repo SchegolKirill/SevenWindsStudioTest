@@ -34,11 +34,10 @@ public class UserControllerTest {
 
     @Test
     void getUser() throws Exception {
-        User testUser = new User("Schegol", "Kirill", "Borisovich", "schegol.kirill@gmail.com",
-                "89210900302");
-        Integer id = userService.addUser(testUser).getId();
+        Integer id = createTestUser("Schegol", "Kirill", "Borisovich", "schegol.kirill@gmail.com",
+                "89210900302").getId();
         mockMvc.perform(
-                        get("/user/getuser/{id}", id))
+                        get("user/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.surname").value("Schegol"))
@@ -53,27 +52,30 @@ public class UserControllerTest {
         User testUser = new User("Schegol", "Kirill", "Borisovich", "schegol.kirill@gmail.com",
                 "89210900302");
 
-        mockMvc.perform(post("/user/adduser")
+        mockMvc.perform(post("/user")
                         .content(objectMapper.writeValueAsString(testUser))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
     }
 
     @Test
     void getAllUsers() throws Exception {
-        User testUser1 = new User("Schegol", "Kirill", "Borisovich", "schegol.kirill@gmail.com",
-                "89210900302");
-        userService.addUser(testUser1);
-        User testUser2 = new User("Schegol2", "Kiril2l", "Borisovich2", "schegol.kirill@g2mail.com",
-                "892109002302");
-        userService.addUser(testUser2);
-
-        mockMvc.perform(get("/user/getusers")).andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(testUser1, testUser2))));
+        Integer id1 = createTestUser("Schegol", "Kirill", "Borisovich", "schegol.kirill@gmail.com",
+                "89210900302").getId();
+        Integer id2 = createTestUser("Schegol2", "Kirill2", "Borisovich2", "schegol2.kirill@gmail.com",
+                "289210900302").getId();
+        mockMvc.perform(get("/user/users")).andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(Arrays.asList(userService.getUser(id1), userService.getUser(id2)))));
     }
 
     @AfterEach
     public void resetDb() {
         repository.deleteAll();
+    }
+
+    private User createTestUser(String surname, String name, String patronymic, String email, String phone) {
+        User user = new User(surname, name, patronymic, email, phone);
+        return repository.save(user);
     }
 }

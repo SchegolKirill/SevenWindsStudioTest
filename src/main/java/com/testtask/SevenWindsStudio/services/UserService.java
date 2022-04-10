@@ -8,5 +8,5 @@ public interface UserService {
     User getUser(Integer id);
     User addUser(User user);
     List<User> getAllUsers();
-    void resetDB();
+    void clearUsers();
 }

@@ -20,25 +20,26 @@ public class UserController {
     @Autowired
     private RequestUserConverter converter;
 
-    @GetMapping("/getuser/{id}")
+    @GetMapping("/{id}")
     @ApiOperation("Получение конкретной записи")
     public User getUser(@PathVariable("id") Integer id) {
         return userService.getUser(id);
     }
 
-    @PostMapping("/adduser")
+    @PostMapping
     @ApiOperation("Добавление записи")
     public User addUser(@RequestBody RequestUserDTO dto) {
         return userService.addUser(converter.DTOToEntity(dto));
     }
 
-    @GetMapping("/getusers")
+    @GetMapping("/users")
     @ApiOperation("Получение всех записей")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
-    @DeleteMapping("/resetdb")
-    public void resetDB() {
-        userService.resetDB();
+
+    @DeleteMapping("/clear")
+    public void clearUsers() {
+        userService.clearUsers();
     }
 }
