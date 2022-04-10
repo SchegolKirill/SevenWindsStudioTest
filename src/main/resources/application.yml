@@ -2,7 +2,7 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  liquibase:
+  liquibase:  # использование liquibase согласовано с HR
     enabled: true
 
   datasource:
